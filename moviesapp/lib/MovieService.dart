@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:moviesapp/models/Movie.dart';
+import 'package:moviesapp/models/MovieInfo.dart';
 
 const APIKEY = "<Your api key here>";
 
@@ -24,14 +25,14 @@ Future<List<Movie>> searchMovies(keyword) async {
   }
 }
 
-Future<Movie> getMoviw(movieId) async {
+Future<MovieInfo> getMoviw(movieId) async {
   final response =
       await http.get('http://www.omdbapi.com/?apikey=$APIKEY&i=$movieId');
 
   if (response.statusCode == 200) {
     Map data = json.decode(response.body);
     if (data['Response'] == "True") {
-      return null;
+      return MovieInfo.fromJSON(data);
     } else {
       throw Exception(data['Error']);
     }
