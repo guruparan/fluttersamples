@@ -30,7 +30,7 @@ class MovieInfo {
         runtime: json['Runtime'],
         genre: json['Genre'],
         director: json['Director'],
-        plot: json['PLot'],
+        plot: json['Plot'],
         poster: json['Poster'],
         imdbRating: json['imdbRating'],
         metaScore: json['Metascore']);
