@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:moviesapp/screens/MovieDetail.dart';
 import 'package:moviesapp/components/MovieItem.dart';
 import 'package:moviesapp/models/Movie.dart';
 
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
+  final Function itemClick;
 
-  MovieList({this.movies});
+  MovieList({this.movies, this.itemClick});
 
   @override
   Widget build(context) {
@@ -18,16 +18,7 @@ class MovieList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return new GestureDetector(
                   child: MovieItem(movie: this.movies[index]),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MovieDetail(
-                                movieName: movies[index].title,
-                                imdbId: movies[index].imdbID,
-                              )),
-                    );
-                  });
+                  onTap: () => this.itemClick(this.movies[index]));
             }));
   }
 }

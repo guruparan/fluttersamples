@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapp/components/MovieList.dart';
+import 'package:moviesapp/screens/MovieDetail.dart';
 import 'package:moviesapp/services/MovieService.dart';
 import 'package:moviesapp/models/Movie.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,17 @@ class MoviesAppHomeState extends State<MoviesAppHome> {
   void dispose() {
     searchTextController.dispose();
     super.dispose();
+  }
+
+  void itemClick(Movie item) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MovieDetail(
+                movieName: item.title,
+                imdbId: item.imdbID,
+              )),
+    );
   }
 
   @override
@@ -54,7 +66,10 @@ class MoviesAppHomeState extends State<MoviesAppHome> {
                   future: searchMovies(searchText),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Expanded(child: MovieList(movies: snapshot.data));
+                      return Expanded(
+                          child: MovieList(
+                              movies: snapshot.data,
+                              itemClick: this.itemClick));
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
